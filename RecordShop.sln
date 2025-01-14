@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordShop", "RecordShop\RecordShop.csproj", "{86FC21F0-4FD1-46B1-B2C7-6C1305D8E1C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordShop_Tests", "RecordShop_Tests\RecordShop_Tests.csproj", "{8A2D016E-FCAA-48F2-9AE8-C3F9D68D9BE1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{86FC21F0-4FD1-46B1-B2C7-6C1305D8E1C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86FC21F0-4FD1-46B1-B2C7-6C1305D8E1C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86FC21F0-4FD1-46B1-B2C7-6C1305D8E1C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86FC21F0-4FD1-46B1-B2C7-6C1305D8E1C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A2D016E-FCAA-48F2-9AE8-C3F9D68D9BE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A2D016E-FCAA-48F2-9AE8-C3F9D68D9BE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A2D016E-FCAA-48F2-9AE8-C3F9D68D9BE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A2D016E-FCAA-48F2-9AE8-C3F9D68D9BE1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
