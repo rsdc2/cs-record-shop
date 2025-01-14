@@ -23,6 +23,19 @@ namespace RecordShop_Tests.ControllersTests
         }
 
         [Test]
+        public void GetAlbumById_Returns_Ok_If_Finds_Album()
+        {
+            // Arrange
+            mockService.Setup(service => service.FindAlbumById(1)).Returns(new Album(1, "Great title", "Great artist"));
+
+            // Act
+            var response = (OkObjectResult)controller.GetAlbumById(1);
+
+            // Assert
+            Assert.That(response.StatusCode == 200);
+        }
+
+        [Test]
         public void DeleteAlbumById_Returns_410_If_Album_Not_Deleted()
         {
             // Arrange
