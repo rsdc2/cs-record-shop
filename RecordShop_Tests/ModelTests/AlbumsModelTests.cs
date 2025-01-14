@@ -59,6 +59,21 @@ namespace RecordShop_Tests.ModelTests
         }
 
         [Test]
+        public void AddNewAlbum_Returns_Album_With_Correct_Id()
+        {
+            // Arrange
+            var album = new Album(1, "Fantastic album", "Fantastic artist");
+            var albumsCount = _model.FindAllAlbums().Count();
+            var newId = _model.FindFirstUnusedId();
+
+            // Act
+            var album_ = _model.AddNewAlbum(album);
+
+            // Assert
+            album.Id.Should().Be(newId);
+        }
+
+        [Test]
         public void FindFirstUnusedId_Returns_2()
         {
             _model.FindFirstUnusedId().Should().Be(2);
