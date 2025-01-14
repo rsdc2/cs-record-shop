@@ -12,6 +12,14 @@ namespace RecordShop
             _service = service;
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult DeleteAlbumById(int id) => _service.DeleteAlbumById(id) switch
+        {
+            true => NoContent(),
+            false => StatusCode(410),
+            null => NotFound()
+        };
+
         [HttpGet("{id}")]
         public IActionResult GetAlbumById(int id)
         {

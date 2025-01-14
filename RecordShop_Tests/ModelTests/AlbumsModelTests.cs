@@ -74,6 +74,28 @@ namespace RecordShop_Tests.ModelTests
         }
 
         [Test]
+        public void DeleteAlbumById_Returns_Null_If_Album_Does_Not_Exist()
+        {
+
+            // Act
+            var returnAlbum = _model.DeleteAlbumById(2);
+
+            // Assert
+            returnAlbum.Should().BeNull();
+        }
+
+        [Test]
+        public void DeleteAlbumById_Returns_True_If_Album_Does_Exist_And_Is_Deleted()
+        {
+
+            // Act
+            var returnAlbum = _model.DeleteAlbumById(1);
+
+            // Assert
+            returnAlbum.Should().BeTrue();
+        }
+
+        [Test]
         public void FindFirstUnusedId_Returns_2()
         {
             _model.FindFirstUnusedId().Should().Be(2);
@@ -105,6 +127,31 @@ namespace RecordShop_Tests.ModelTests
             album.Should().NotBeNull();
         }
 
+        [Test]
+        public void UpdateAlbumById_Returns_Not_Null()
+        {
+            // Arrange
+            var album = new Album(1, "Fantastic album", "Fantastic artist");
+
+            // Act
+            var returnAlbum = _model.UpdateAlbumById(album.Id, album);
+
+            // Assert
+            returnAlbum.Should().NotBeNull();
+        }
+
+        [Test]
+        public void UpdateAlbumById_Returns_Album_With_Correct_Id()
+        {
+            // Arrange
+            var album = new Album(1, "Fantastic album", "Fantastic artist");
+
+            // Act
+            var returnAlbum = _model.UpdateAlbumById(album.Id, album);
+
+            // Assert
+            returnAlbum.Artist.Should().Be(album.Artist);
+        }
 
 
     }

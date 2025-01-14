@@ -6,10 +6,13 @@ namespace RecordShop
 
     public interface IAlbumsModel
     {
+        Album? AddNewAlbum(Album album);
+        bool? DeleteAlbumById(int id);
         IEnumerable<Album> FindAllAlbums();
         Album? FindAlbumById(int id);
         int FindFirstUnusedId();
-        Album? AddNewAlbum(Album album);
+
+        Album? UpdateAlbumById(int id, Album album);
     }
 
     public class AlbumsModel : IAlbumsModel
@@ -17,10 +20,6 @@ namespace RecordShop
         static RecordShopDbContext _dbContext;
         public AlbumsModel(RecordShopDbContext dbContext)
         {
-            //if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" && _dbContext == null)
-            //{
-
-            //}
             _dbContext = dbContext;
 
         }
@@ -31,6 +30,18 @@ namespace RecordShop
             _dbContext.Add(album);
             _dbContext.SaveChanges();
             return _dbContext.Albums.FirstOrDefault(album => album.Id == albumId);
+        }
+
+        public bool? DeleteAlbumById(int id)
+        {
+            var album = FindAlbumById(id);
+            if (album == null) return null;
+
+            var returnAlbum = _dbContext.Remove(album);
+            _dbContext.SaveChanges();
+
+            var foundAlbum = FindAlbumById(id);
+            return foundAlbum == null ? true : false;
         }
 
         public IEnumerable<Album> FindAllAlbums()
@@ -51,6 +62,20 @@ namespace RecordShop
         {
             var album = _dbContext.Albums.FirstOrDefault(album => album.Id == id);
             return album;
+        }
+
+        public Album? UpdateAlbumById(int id, Album album)
+        {
+            var existingAlbum = FindAlbumById(id);
+            if (existingAlbum == null)
+            {
+                return null;
+            }
+            album.Id = id;
+            _dbContext.Albums.Remove(existingAlbum);
+            _dbContext.Albums.Add(album);
+            _dbContext.SaveChanges();
+            return FindAlbumById(id);
         }
     }
 }
