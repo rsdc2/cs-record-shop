@@ -45,16 +45,17 @@ namespace RecordShop_Tests.ModelTests
 
 
         [Test]
-        public void AddNewAlbum_Returns_Album_To_Be_Added()
+        public void AddNewAlbum_Increases_Count_Of_Albums_By_One()
         {
             // Arrange
             var album = new Album(1, "Fantastic album", "Fantastic artist");
+            var albumsCount = _model.FindAllAlbums().Count();
 
             // Act
             var album_ = _model.AddNewAlbum(album);
 
             // Assert
-            _model.FindAllAlbums().Count().Should().Be(2);
+            _model.FindAllAlbums().Count().Should().Be(albumsCount + 1);
         }
 
         [Test]
