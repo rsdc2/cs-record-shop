@@ -8,6 +8,8 @@ namespace RecordShop
     {
         IEnumerable<Album> FindAllAlbums();
         Album? FindAlbumById(int id);
+        int FindFirstUnusedId();
+        Album? AddNewAlbum(Album album);
     }
 
     public class AlbumsModel : IAlbumsModel
@@ -24,10 +26,11 @@ namespace RecordShop
         }
         public Album? AddNewAlbum(Album album)
         {
-            album.Id = FindFirstUnusedId();
+            var albumId = FindFirstUnusedId();
+            album.Id = albumId;
             _dbContext.Add(album);
             _dbContext.SaveChanges();
-            return _dbContext.Albums.FirstOrDefault(album => album.Id == album.Id);
+            return _dbContext.Albums.FirstOrDefault(album => album.Id == albumId);
         }
 
         public IEnumerable<Album> FindAllAlbums()
@@ -49,7 +52,5 @@ namespace RecordShop
             var album = _dbContext.Albums.FirstOrDefault(album => album.Id == id);
             return album;
         }
-
-
     }
 }

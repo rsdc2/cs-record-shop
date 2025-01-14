@@ -2,8 +2,10 @@
 {
     public interface IAlbumsService
     {
-        IEnumerable<Album> GetAllAlbums();
-        Album? GetAlbumById(int id);
+        IEnumerable<Album> FindAllAlbums();
+        Album? FindAlbumById(int id);
+
+        Album? AddNewAlbum(Album album);
     }
 
     public class AlbumsService : IAlbumsService
@@ -15,12 +17,17 @@
             _model = model;
         }
 
-        public IEnumerable<Album> GetAllAlbums()
+        public Album? AddNewAlbum(Album album)
+        {
+            return _model.AddNewAlbum(album);
+        }
+
+        public IEnumerable<Album> FindAllAlbums()
         {
             return _model.FindAllAlbums();
         }
 
-        public Album? GetAlbumById(int id)
+        public Album? FindAlbumById(int id)
         {
             return _model.FindAlbumById(id);
         }
