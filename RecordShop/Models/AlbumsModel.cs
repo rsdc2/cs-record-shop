@@ -17,7 +17,7 @@ namespace RecordShop
 
     public class AlbumsModel : IAlbumsModel
     {
-        static RecordShopDbContext _dbContext;
+        static RecordShopDbContext? _dbContext;
         public AlbumsModel(RecordShopDbContext dbContext)
         {
             _dbContext = dbContext;

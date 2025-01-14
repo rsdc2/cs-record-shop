@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RecordShop;
-using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 
 namespace RecordShop_Tests.ModelTests
@@ -55,7 +54,7 @@ namespace RecordShop_Tests.ModelTests
             var album_ = _model.AddNewAlbum(album);
 
             // Assert
-            _model.FindAllAlbums().Count().Should().Be(albumsCount + 1);
+            Assert.That(_model.FindAllAlbums().Count() == albumsCount + 1);
         }
 
         [Test]
@@ -70,7 +69,7 @@ namespace RecordShop_Tests.ModelTests
             var album_ = _model.AddNewAlbum(album);
 
             // Assert
-            album.Id.Should().Be(newId);
+            Assert.That(album.Id == newId);
         }
 
         [Test]
@@ -81,7 +80,7 @@ namespace RecordShop_Tests.ModelTests
             var returnAlbum = _model.DeleteAlbumById(2);
 
             // Assert
-            returnAlbum.Should().BeNull();
+            Assert.That(returnAlbum == null);
         }
 
         [Test]
@@ -92,13 +91,13 @@ namespace RecordShop_Tests.ModelTests
             var returnAlbum = _model.DeleteAlbumById(1);
 
             // Assert
-            returnAlbum.Should().BeTrue();
+            Assert.That(returnAlbum == true);
         }
 
         [Test]
         public void FindFirstUnusedId_Returns_2()
         {
-            _model.FindFirstUnusedId().Should().Be(2);
+            Assert.That(_model.FindFirstUnusedId() == 2);
         }
 
         [Test]
@@ -111,7 +110,7 @@ namespace RecordShop_Tests.ModelTests
             var albums = _model.FindAllAlbums();
 
             // Assert
-            albums.Should().NotBeNull();
+            Assert.That(albums != null);
         }
 
         [Test]
@@ -124,7 +123,7 @@ namespace RecordShop_Tests.ModelTests
             var album = _model.FindAlbumById(1);
 
             // Assert
-            album.Should().NotBeNull();
+            Assert.That(album != null);
         }
 
         [Test]
@@ -137,7 +136,7 @@ namespace RecordShop_Tests.ModelTests
             var returnAlbum = _model.UpdateAlbumById(album.Id, album);
 
             // Assert
-            returnAlbum.Should().NotBeNull();
+            Assert.That(returnAlbum != null);
         }
 
         [Test]
@@ -150,7 +149,7 @@ namespace RecordShop_Tests.ModelTests
             var returnAlbum = _model.UpdateAlbumById(album.Id, album);
 
             // Assert
-            returnAlbum.Artist.Should().Be(album.Artist);
+            Assert.That(returnAlbum != null && returnAlbum.Artist == album.Artist);
         }
 
 
