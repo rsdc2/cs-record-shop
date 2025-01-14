@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace RecordShop.Controllers
+namespace RecordShop
 {
     [ApiController]
     [Route("[controller]")]
@@ -13,5 +13,6 @@ namespace RecordShop.Controllers
         {
             return Ok("Server is running");
         }
+
     }
 }

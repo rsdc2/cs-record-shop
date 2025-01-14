@@ -10,9 +10,11 @@ namespace RecordShop
             // Add services to the container.
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IAlbumsModel, AlbumsModel>();
+            builder.Services.AddScoped<IAlbumsService, AlbumsService>();
 
             var app = builder.Build();
 
