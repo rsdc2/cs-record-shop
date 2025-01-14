@@ -34,5 +34,31 @@ namespace RecordShop_Tests.ControllersTests
             // Assert
             Assert.That(response.StatusCode == 410);
         }
+
+        [Test]
+        public void DeleteAlbumById_Returns_404_If_Album_Not_Found()
+        {
+            // Arrange
+            mockService.Setup(service => service.DeleteAlbumById(1)).Returns<bool?>(null);
+
+            // Act
+            var response = (StatusCodeResult)controller.DeleteAlbumById(1);
+
+            // Assert
+            Assert.That(response.StatusCode == 404);
+        }
+
+        [Test]
+        public void DeleteAlbumById_Returns_204_If_Album_Successfully_Deleted()
+        {
+            // Arrange
+            mockService.Setup(service => service.DeleteAlbumById(1)).Returns(true);
+
+            // Act
+            var response = (StatusCodeResult)controller.DeleteAlbumById(1);
+
+            // Assert
+            Assert.That(response.StatusCode == 204);
+        }
     }
 }
