@@ -22,10 +22,24 @@ namespace RecordShop
             _dbContext = dbContext;
 
         }
+        public Album? AddNewAlbum(Album album)
+        {
+            _dbContext.Add(album);
+            return _dbContext.Albums.FirstOrDefault(album => album.Id == album.Id);
+        }
 
         public IEnumerable<Album> FindAllAlbums()
         {
             return _dbContext.Albums;
+        }
+
+        public int FindFirstUnusedId()
+        {
+            if (_dbContext.Albums.ToList().Count == 0)
+            {
+                return 0;
+            } 
+            return _dbContext.Albums.Max(album => album.Id) + 1;
         }
 
         public Album? FindAlbumById(int id)

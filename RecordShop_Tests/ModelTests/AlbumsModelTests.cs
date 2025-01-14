@@ -17,7 +17,20 @@ namespace RecordShop_Tests.ModelTests
         [TearDown]
         public void TeardownDb()
         {
+            _dbContext.Database.EnsureDeleted();
             _dbContext.Dispose();
+        }
+
+        public static void InjectInitialTestDataIntoDb(RecordShopDbContext dbContext)
+        {
+            var greatAlbum = new Album(id: 1, title: "Great album", artist: "Great artist");
+            if (dbContext != null)
+            {
+                dbContext.Albums.Add(greatAlbum);
+                dbContext.SaveChanges();
+                return;
+            }
+            throw new NullReferenceException("No database context present");
         }
 
         [SetUp]
@@ -26,7 +39,7 @@ namespace RecordShop_Tests.ModelTests
             var optionsBuilder = new DbContextOptionsBuilder<RecordShopDbContext>();
             optionsBuilder.UseInMemoryDatabase("RecordShopDB");
             _dbContext = new RecordShopDbContext(optionsBuilder.Options);
-            Development.InjectDevelopmentDataIntoDb(_dbContext);
+            InjectInitialTestDataIntoDb(_dbContext);
             _model = new AlbumsModel(_dbContext);
         }
 
@@ -54,6 +67,25 @@ namespace RecordShop_Tests.ModelTests
 
             // Assert
             album.Should().NotBeNull();
+        }
+
+        [Test]
+        public void AddNewAlbum_Returns_Album_To_Be_Added()
+        {
+            // Arrange
+
+
+            // Act
+            var album = _model.FindAlbumById(1);
+
+            // Assert
+            album.Should().NotBeNull();
+        }
+
+        [Test]
+        public void FindFirstUnusedId_Returns_2()
+        {
+            _model.FindFirstUnusedId().Should().Be(2);
         }
 
     }
