@@ -24,7 +24,9 @@ namespace RecordShop
         }
         public Album? AddNewAlbum(Album album)
         {
+            album.Id = FindFirstUnusedId();
             _dbContext.Add(album);
+            _dbContext.SaveChanges();
             return _dbContext.Albums.FirstOrDefault(album => album.Id == album.Id);
         }
 

@@ -43,6 +43,26 @@ namespace RecordShop_Tests.ModelTests
             _model = new AlbumsModel(_dbContext);
         }
 
+
+        [Test]
+        public void AddNewAlbum_Returns_Album_To_Be_Added()
+        {
+            // Arrange
+            var album = new Album(1, "Fantastic album", "Fantastic artist");
+
+            // Act
+            var album_ = _model.AddNewAlbum(album);
+
+            // Assert
+            _model.FindAllAlbums().Count().Should().Be(2);
+        }
+
+        [Test]
+        public void FindFirstUnusedId_Returns_2()
+        {
+            _model.FindFirstUnusedId().Should().Be(2);
+        }
+
         [Test]
         public void GetAllAlbums_Returns_List_of_Albums_Not_Null()
         {
@@ -69,24 +89,7 @@ namespace RecordShop_Tests.ModelTests
             album.Should().NotBeNull();
         }
 
-        [Test]
-        public void AddNewAlbum_Returns_Album_To_Be_Added()
-        {
-            // Arrange
 
-
-            // Act
-            var album = _model.FindAlbumById(1);
-
-            // Assert
-            album.Should().NotBeNull();
-        }
-
-        [Test]
-        public void FindFirstUnusedId_Returns_2()
-        {
-            _model.FindFirstUnusedId().Should().Be(2);
-        }
 
     }
 }
