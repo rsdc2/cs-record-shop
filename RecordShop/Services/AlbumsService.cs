@@ -2,7 +2,7 @@
 {
     public interface IAlbumsService
     {
-        List<Album> GetAllAlbums();
+        IEnumerable<Album> GetAllAlbums();
     }
 
     public class AlbumsService : IAlbumsService
@@ -14,7 +14,7 @@
             _model = model;
         }
 
-        public List<Album> GetAllAlbums()
+        public IEnumerable<Album> GetAllAlbums()
         {
             return _model.GetAllAlbums();
         }

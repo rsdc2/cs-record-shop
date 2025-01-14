@@ -1,22 +1,28 @@
-﻿namespace RecordShop
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace RecordShop
 {
     
 
     public interface IAlbumsModel
     {
-        List<Album> GetAllAlbums();
+        IEnumerable<Album> GetAllAlbums();
     }
 
     public class AlbumsModel : IAlbumsModel
     {
-        private static Album greatAlbum = new Album(id: 1, title: "Great album", artist: "Great artist");
-        private static List<Album> testAlbums = new()
+        RecordShopDbContext _dbContext;
+        public AlbumsModel(RecordShopDbContext dbContext)
         {
-            greatAlbum
-        };
-        public List<Album> GetAllAlbums()
+            _dbContext = dbContext;
+            var greatAlbum = new Album(id: 1, title: "Great album", artist: "Great artist");
+            dbContext.Albums.Add(greatAlbum);
+            dbContext.SaveChanges();
+        }
+
+        public IEnumerable<Album> GetAllAlbums()
         {
-            return testAlbums;
+            return _dbContext.Albums;
         }
     }
 }

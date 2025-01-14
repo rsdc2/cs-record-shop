@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using RecordShop;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 
 namespace RecordShop_Tests.ModelTests
 {
     internal class AlbumsModelTests
     {
+        RecordShopDbContext _dbContext;
         AlbumsModel _model;
 
         private static Album greatAlbum = new Album(id: 1, title: "Great album", artist: "Great artist");
@@ -21,7 +23,10 @@ namespace RecordShop_Tests.ModelTests
         [SetUp]
         public void Setup()
         {
-            _model = new AlbumsModel();
+            var optionsBuilder = new DbContextOptionsBuilder<RecordShopDbContext>();
+            optionsBuilder.UseInMemoryDatabase("RecordShopDB");
+            _dbContext = new RecordShopDbContext(optionsBuilder.Options);
+            _model = new AlbumsModel(_dbContext);
 
         }
 
