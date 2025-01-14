@@ -1,8 +1,11 @@
 
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace RecordShop
 {
+    //public void 
+
     public class Program
     {
         public static void Main(string[] args)
@@ -16,11 +19,13 @@ namespace RecordShop
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
            
-            if (environment == "Development")
+            if (builder.Environment.IsDevelopment())
             {
-                builder.Services.AddDbContext<RecordShopDbContext>(options => options.UseInMemoryDatabase(databaseName: "RecordShopDB"));
+                builder.Services.AddDbContext<RecordShopDbContext>(
+                    options => options.UseInMemoryDatabase(databaseName: "RecordShopDB")
+               );
             }
-            builder.Services.AddScoped<IAlbumsModel, AlbumsModel>();
+            builder.Services.AddScoped<IAlbumsModel, AlbumsModel>();    
             builder.Services.AddScoped<IAlbumsService, AlbumsService>();
 
             var app = builder.Build();
@@ -36,10 +41,15 @@ namespace RecordShop
 
             app.UseAuthorization();
 
-
+            if (app.Environment.IsDevelopment())
+            {
+                Development.InjectDevelopmentDataIntoApp(app);
+            }
             app.MapControllers();
 
             app.Run();
         }
+
+
     }
 }

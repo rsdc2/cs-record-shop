@@ -6,16 +6,23 @@ namespace RecordShop
     [Route("[controller]")]
     public class AlbumsController : ControllerBase
     {
-        private IAlbumsService albumsService;
+        private IAlbumsService _service;
         public AlbumsController(IAlbumsService service)
         {
-            albumsService = service;
+            _service = service;
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetAlbumById(int id)
+        {
+            var album = _service.GetAlbumById(id);
+            return album == null ? NotFound() : Ok(album);
         }
 
         [HttpGet]
         public IActionResult GetAllAlbums()
         {
-            return Ok(albumsService.GetAllAlbums());
+            return Ok(_service.GetAllAlbums());
         }
 
     }

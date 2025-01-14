@@ -14,11 +14,11 @@ namespace RecordShop_Tests.ModelTests
         RecordShopDbContext _dbContext;
         AlbumsModel _model;
 
-        private static Album greatAlbum = new Album(id: 1, title: "Great album", artist: "Great artist");
-        private static List<Album> testAlbums = new()
+        [TearDown]
+        public void TeardownDb()
         {
-            greatAlbum
-        };
+            _dbContext.Dispose();
+        }
 
         [SetUp]
         public void Setup()
@@ -26,21 +26,35 @@ namespace RecordShop_Tests.ModelTests
             var optionsBuilder = new DbContextOptionsBuilder<RecordShopDbContext>();
             optionsBuilder.UseInMemoryDatabase("RecordShopDB");
             _dbContext = new RecordShopDbContext(optionsBuilder.Options);
+            Development.InjectDevelopmentDataIntoDb(_dbContext);
             _model = new AlbumsModel(_dbContext);
-
         }
 
         [Test]
-        public void GetAllAlbumsReturnsListOfAlbums()
+        public void GetAllAlbums_Returns_List_of_Albums_Not_Null()
         {
             // Arrange
             
 
             // Act
-            var albums = _model.GetAllAlbums();
+            var albums = _model.FindAllAlbums();
 
             // Assert
             albums.Should().NotBeNull();
         }
+
+        [Test]
+        public void GetAlbumById_Returns_Not_Null()
+        {
+            // Arrange
+
+
+            // Act
+            var album = _model.FindAlbumById(1);
+
+            // Assert
+            album.Should().NotBeNull();
+        }
+
     }
 }
