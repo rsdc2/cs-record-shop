@@ -74,7 +74,7 @@ namespace RecordShop_Tests.ControllersTests
             // Arrange
             mockService
                 .Setup(service => service.FindAllAlbums())
-                .Returns([new Album(1, "Great title", "Great artist")]);
+                .Returns([new Album() { Title = "Great title", Artist = "Great artist" }]);
 
             // Act
             var response = (OkObjectResult)controller.GetAllAlbums();
@@ -104,7 +104,7 @@ namespace RecordShop_Tests.ControllersTests
             // Arrange
             mockService
                 .Setup(service => service.FindAlbumById(1))
-                .Returns(new Album(1, "Great title", "Great artist"));
+                .Returns(new Album() { Title = "Great title", Artist = "Great artist" });
 
             // Act
             var response = (OkObjectResult)controller.GetAlbumById(1);
@@ -132,7 +132,7 @@ namespace RecordShop_Tests.ControllersTests
         public void PostAlbum_Returns_500_If_Fails_To_Add_Album()
         {
             // Arrange
-            var newAlbum = new Album(1, "Great title", "Great artist");
+            var newAlbum = new Album() { Title = "Great title", Artist = "Great artist" };
             mockService
                 .Setup(service => service.AddNewAlbum(newAlbum))
                 .Returns<Album?>(null);
@@ -147,7 +147,7 @@ namespace RecordShop_Tests.ControllersTests
         public void PostAlbum_Returns_Ok_If_Successfully_Adds_Album()
         {
             // Arrange
-            var newAlbum = new Album(2, "Great title", "Great artist");
+            var newAlbum = new Album() { Id = 2, Title = "Great title", Artist = "Great artist" };
             mockService
                 .Setup(service => service.AddNewAlbum(newAlbum))
                 .Returns(newAlbum);
@@ -163,7 +163,7 @@ namespace RecordShop_Tests.ControllersTests
         public void PostAlbum_Returns_404_If_Fails_To_Add_Album()
         {
             // Arrange
-            var newAlbum = new Album(2, "Great title", "Great artist");
+            var newAlbum = new Album() { Id = 2, Title = "Great title", Artist = "Great artist" };
             mockService
                 .Setup(service => service.UpdateAlbumById(2, newAlbum))
                 .Returns<Album?>(null);
@@ -178,7 +178,7 @@ namespace RecordShop_Tests.ControllersTests
         public void PutAlbum_Returns_Ok_If_Successfully_Updates_Album()
         {
             // Arrange
-            var updatedAlbum = new Album(2, "Great title", "Great artist");
+            var updatedAlbum = new Album() { Id = 2, Title = "Great title", Artist = "Great artist" };
             mockService
                 .Setup(service => service.UpdateAlbumById(2, updatedAlbum))
                 .Returns(updatedAlbum);

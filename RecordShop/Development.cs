@@ -5,7 +5,7 @@
 
         public static void InjectDevelopmentDataIntoDb(RecordShopDbContext dbContext)
         {
-            var greatAlbum = new Album(id: 1, title: "Great album", artist: "Great artist");
+            var greatAlbum = new Album() { Title = "Great album", Artist = "Great artist"};
             if (dbContext != null)
             {
                 dbContext.Albums.Add(greatAlbum);

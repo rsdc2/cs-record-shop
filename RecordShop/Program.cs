@@ -1,6 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
+
 
 namespace RecordShop
 {
@@ -10,20 +10,31 @@ namespace RecordShop
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            // Environments
+            var options = new WebApplicationOptions() { EnvironmentName = Environments.Development };
+            var builder = WebApplication.CreateBuilder(options);
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            var dbtype = DatabaseType.SqlServer;
+            
             // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-           
+
+            // Connect to the database 
             if (builder.Environment.IsDevelopment())
             {
-                builder.Services.AddDbContext<RecordShopDbContext>(
-                    options => options.UseInMemoryDatabase(databaseName: "RecordShopDB")
-               );
+                if (dbtype == DatabaseType.InMemory)
+                {
+                    builder.Services.AddDbContext<RecordShopDbContext>(
+                        options => options.UseInMemoryDatabase(databaseName: "RecordShopInMemory"));
+                }
+                else if (dbtype == DatabaseType.SqlServer)
+                {
+                    var connectionString = builder.Configuration.GetConnectionString("RecordShop");
+                    builder.Services.AddDbContext<RecordShopDbContext>(
+                        options => options.UseSqlServer(connectionString: connectionString));
+                }
             }
             builder.Services.AddScoped<IAlbumsModel, AlbumsModel>();    
             builder.Services.AddScoped<IAlbumsService, AlbumsService>();
@@ -41,7 +52,7 @@ namespace RecordShop
 
             app.UseAuthorization();
 
-            if (app.Environment.IsDevelopment())
+            if (dbtype == DatabaseType.InMemory)
             {
                 Development.InjectDevelopmentDataIntoApp(app);
             }

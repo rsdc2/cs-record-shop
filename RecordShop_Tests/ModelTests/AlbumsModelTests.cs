@@ -22,7 +22,7 @@ namespace RecordShop_Tests.ModelTests
 
         public static void InjectInitialTestDataIntoDb(RecordShopDbContext dbContext)
         {
-            var greatAlbum = new Album(id: 1, title: "Great album", artist: "Great artist");
+            var greatAlbum = new Album() { Title = "Fantastic album", Artist = "Fantastic artist" };
             if (dbContext != null)
             {
                 dbContext.Albums.Add(greatAlbum);
@@ -47,7 +47,7 @@ namespace RecordShop_Tests.ModelTests
         public void AddNewAlbum_Increases_Count_Of_Albums_By_One()
         {
             // Arrange
-            var album = new Album(1, "Fantastic album", "Fantastic artist");
+            var album = new Album() { Title = "Fantastic album", Artist = "Fantastic artist" };
             var albumsCount = _model.FindAllAlbums().Count();
 
             // Act
@@ -61,7 +61,7 @@ namespace RecordShop_Tests.ModelTests
         public void AddNewAlbum_Returns_Album_With_Correct_Id()
         {
             // Arrange
-            var album = new Album(1, "Fantastic album", "Fantastic artist");
+            var album = new Album() { Title = "Fantastic album", Artist = "Fantastic artist" };
             var albumsCount = _model.FindAllAlbums().Count();
             var newId = _model.FindFirstUnusedId();
 
@@ -130,10 +130,10 @@ namespace RecordShop_Tests.ModelTests
         public void UpdateAlbumById_Returns_Not_Null()
         {
             // Arrange
-            var album = new Album(1, "Fantastic album", "Fantastic artist");
-
+            var album = new Album() { Title = "Fantastic album", Artist = "Fantastic artist" };
+            var id = _model.FindAllAlbums().First().Id;
             // Act
-            var returnAlbum = _model.UpdateAlbumById(album.Id, album);
+            var returnAlbum = _model.UpdateAlbumById(id, album);
 
             // Assert
             Assert.That(returnAlbum != null);
@@ -143,10 +143,11 @@ namespace RecordShop_Tests.ModelTests
         public void UpdateAlbumById_Returns_Album_With_Correct_Id()
         {
             // Arrange
-            var album = new Album(1, "Fantastic album", "Fantastic artist");
+            var album = new Album() { Title = "Fantastic album", Artist = "Fantastic artist" };
+            var id = _model.FindAllAlbums().First().Id;
 
             // Act
-            var returnAlbum = _model.UpdateAlbumById(album.Id, album);
+            var returnAlbum = _model.UpdateAlbumById(id, album);
 
             // Assert
             Assert.That(returnAlbum != null && returnAlbum.Artist == album.Artist);
