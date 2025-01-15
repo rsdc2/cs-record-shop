@@ -25,12 +25,11 @@ namespace RecordShop
         }
         public Album? AddNewAlbum(Album album)
         {
-            var albumId = FindFirstUnusedId();
-            if (albumId == null || _dbContext == null) return null;
-            album.Id = (int)albumId;
+            var albumToAdd = new Album() { Title = album.Title, Artist =  album.Artist };
+            if (_dbContext == null) return null;
             _dbContext.Add(album);
             _dbContext.SaveChanges();
-            return _dbContext.Albums.FirstOrDefault(album => album.Id == albumId);
+            return _dbContext.Albums.FirstOrDefault(a => a.Title == album.Title && a.Artist == album.Artist);
         }
 
         public bool? DeleteAlbumById(int id)
