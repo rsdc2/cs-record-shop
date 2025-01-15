@@ -26,7 +26,9 @@ namespace RecordShop_Tests.ControllersTests
         public void GetAllAlbums_Returns_Ok_If_Finds_Albums()
         {
             // Arrange
-            mockService.Setup(service => service.FindAllAlbums()).Returns([new Album(1, "Great title", "Great artist")]);
+            mockService
+                .Setup(service => service.FindAllAlbums())
+                .Returns([new Album(1, "Great title", "Great artist")]);
 
             // Act
             var response = (OkObjectResult)controller.GetAllAlbums();
@@ -39,7 +41,9 @@ namespace RecordShop_Tests.ControllersTests
         public void GetAllAlbums_Returns_500_If_No_Albums()
         {
             // Arrange
-            mockService.Setup(service => service.FindAllAlbums()).Returns<List<Album>?>(null);
+            mockService
+                .Setup(service => service.FindAllAlbums())
+                .Returns<List<Album>?>(null);
 
             // Act
             var response = (StatusCodeResult)controller.GetAllAlbums();
@@ -52,7 +56,9 @@ namespace RecordShop_Tests.ControllersTests
         public void GetAlbumById_Returns_Ok_If_Finds_Album()
         {
             // Arrange
-            mockService.Setup(service => service.FindAlbumById(1)).Returns(new Album(1, "Great title", "Great artist"));
+            mockService
+                .Setup(service => service.FindAlbumById(1))
+                .Returns(new Album(1, "Great title", "Great artist"));
 
             // Act
             var response = (OkObjectResult)controller.GetAlbumById(1);
@@ -65,7 +71,9 @@ namespace RecordShop_Tests.ControllersTests
         public void GetAlbumById_Returns_404_If_Does_Not_Find_Album()
         {
             // Arrange
-            mockService.Setup(service => service.FindAlbumById(1)).Returns<Album?>(null);
+            mockService
+                .Setup(service => service.FindAlbumById(1))
+                .Returns<Album?>(null);
 
             // Act
             var response = (NotFoundResult)controller.GetAlbumById(1);
@@ -78,7 +86,9 @@ namespace RecordShop_Tests.ControllersTests
         public void DeleteAlbumById_Returns_410_If_Album_Not_Deleted()
         {
             // Arrange
-            mockService.Setup(service => service.DeleteAlbumById(1)).Returns(false);
+            mockService
+                .Setup(service => service.DeleteAlbumById(1))
+                .Returns(false);
 
             // Act
             var response = (StatusCodeResult)controller.DeleteAlbumById(1);
@@ -91,7 +101,9 @@ namespace RecordShop_Tests.ControllersTests
         public void DeleteAlbumById_Returns_404_If_Album_Not_Found()
         {
             // Arrange
-            mockService.Setup(service => service.DeleteAlbumById(1)).Returns<bool?>(null);
+            mockService
+                .Setup(service => service.DeleteAlbumById(1))
+                .Returns<bool?>(null);
 
             // Act
             var response = (StatusCodeResult)controller.DeleteAlbumById(1);
@@ -104,7 +116,9 @@ namespace RecordShop_Tests.ControllersTests
         public void DeleteAlbumById_Returns_204_If_Album_Successfully_Deleted()
         {
             // Arrange
-            mockService.Setup(service => service.DeleteAlbumById(1)).Returns(true);
+            mockService
+                .Setup(service => service.DeleteAlbumById(1))
+                .Returns(true);
 
             // Act
             var response = (StatusCodeResult)controller.DeleteAlbumById(1);
