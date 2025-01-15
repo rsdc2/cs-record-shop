@@ -65,4 +65,4 @@ The test project depends on:
 - [Moq](https://github.com/devlooped/moq) ([BSD-3](https://github.com/devlooped/moq?tab=License-1-ov-file#readme))
 - [Coverlet](https://github.com/coverlet-coverage/) ([MIT](https://github.com/coverlet-coverage/coverlet?tab=License-1-ov-file))
 
-For license text, see under `LICENSES/`.
+For license texts, see under `LICENSES/`.
