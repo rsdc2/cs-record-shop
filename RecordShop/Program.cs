@@ -14,7 +14,7 @@ namespace RecordShop
             var options = new WebApplicationOptions() { EnvironmentName = Environments.Development };
             var builder = WebApplication.CreateBuilder(options);
             var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var dbtype = DatabaseType.SqlServer;
+            var dbtype = DatabaseType.InMemory;
             
             // Add services to the container.
             builder.Services.AddControllers();
