@@ -35,11 +35,18 @@ namespace RecordShop
         };
 
         [HttpPost]
-        public IActionResult PostAlbum(Album album)
+        public IActionResult PostAlbum(Album album) => _service.AddNewAlbum(album) switch
         {
-            var returnAlbum = _service.AddNewAlbum(album);
-            return returnAlbum == null ? NotFound() : Ok(returnAlbum);
-        }
+            null => StatusCode(500),
+            Album albumAdded => Ok(albumAdded)
+        };
+
+        [HttpPut("{id}")]
+        public IActionResult PutAlbum(int id, Album album) => _service.UpdateAlbumById(id, album) switch
+        {
+            null => NotFound(),
+            Album updatedAlbum => Ok(updatedAlbum)
+        };
 
     }
 }
