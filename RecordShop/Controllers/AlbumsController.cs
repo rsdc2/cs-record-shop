@@ -21,17 +21,18 @@ namespace RecordShop
         };
 
         [HttpGet("{id}")]
-        public IActionResult GetAlbumById(int id)
+        public IActionResult GetAlbumById(int id) => _service.FindAlbumById(id) switch
         {
-            var album = _service.FindAlbumById(id);
-            return album == null ? NotFound() : Ok(album);
-        }
+            null => NotFound(),
+            Album album => Ok(album)
+        };
 
         [HttpGet]
-        public IActionResult GetAllAlbums()
+        public IActionResult GetAllAlbums() => _service.FindAllAlbums() switch
         {
-            return Ok(_service.FindAllAlbums());
-        }
+            null => StatusCode(500),
+            IEnumerable<Album> albums => Ok(albums)
+        };
 
         [HttpPost]
         public IActionResult PostAlbum(Album album)

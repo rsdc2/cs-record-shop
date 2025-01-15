@@ -8,9 +8,9 @@ namespace RecordShop
     {
         Album? AddNewAlbum(Album album);
         bool? DeleteAlbumById(int id);
-        IEnumerable<Album> FindAllAlbums();
+        IEnumerable<Album>? FindAllAlbums();
         Album? FindAlbumById(int id);
-        int FindFirstUnusedId();
+        int? FindFirstUnusedId();
 
         Album? UpdateAlbumById(int id, Album album);
     }
@@ -26,7 +26,8 @@ namespace RecordShop
         public Album? AddNewAlbum(Album album)
         {
             var albumId = FindFirstUnusedId();
-            album.Id = albumId;
+            if (albumId == null || _dbContext == null) return null;
+            album.Id = (int)albumId;
             _dbContext.Add(album);
             _dbContext.SaveChanges();
             return _dbContext.Albums.FirstOrDefault(album => album.Id == albumId);
@@ -34,6 +35,7 @@ namespace RecordShop
 
         public bool? DeleteAlbumById(int id)
         {
+            if (_dbContext == null) return null;
             var album = FindAlbumById(id);
             if (album == null) return null;
 
@@ -44,28 +46,30 @@ namespace RecordShop
             return foundAlbum == null ? true : false;
         }
 
-        public IEnumerable<Album> FindAllAlbums()
+        public IEnumerable<Album>? FindAllAlbums()
         {
+            if (_dbContext == null) return null;
             return _dbContext.Albums;
         }
 
-        public int FindFirstUnusedId()
+        public int? FindFirstUnusedId()
         {
-            if (_dbContext.Albums.ToList().Count == 0)
-            {
-                return 0;
-            } 
+            if (_dbContext == null) return null;
+            if (_dbContext.Albums.ToList().Count == 0) return 0;
             return _dbContext.Albums.Max(album => album.Id) + 1;
         }
 
         public Album? FindAlbumById(int id)
         {
+            if (_dbContext == null) return null;
             var album = _dbContext.Albums.FirstOrDefault(album => album.Id == id);
             return album;
         }
 
         public Album? UpdateAlbumById(int id, Album album)
         {
+            if (_dbContext == null) return null;
+
             var existingAlbum = FindAlbumById(id);
             if (existingAlbum == null)
             {

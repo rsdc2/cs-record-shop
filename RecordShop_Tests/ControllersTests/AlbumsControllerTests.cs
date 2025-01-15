@@ -23,6 +23,32 @@ namespace RecordShop_Tests.ControllersTests
         }
 
         [Test]
+        public void GetAllAlbums_Returns_Ok_If_Finds_Albums()
+        {
+            // Arrange
+            mockService.Setup(service => service.FindAllAlbums()).Returns([new Album(1, "Great title", "Great artist")]);
+
+            // Act
+            var response = (OkObjectResult)controller.GetAllAlbums();
+
+            // Assert
+            Assert.That(response.StatusCode == 200);
+        }
+
+        [Test]
+        public void GetAllAlbums_Returns_500_If_No_Albums()
+        {
+            // Arrange
+            mockService.Setup(service => service.FindAllAlbums()).Returns<List<Album>?>(null);
+
+            // Act
+            var response = (StatusCodeResult)controller.GetAllAlbums();
+
+            // Assert
+            Assert.That(response.StatusCode == 500);
+        }
+
+        [Test]
         public void GetAlbumById_Returns_Ok_If_Finds_Album()
         {
             // Arrange
@@ -33,6 +59,19 @@ namespace RecordShop_Tests.ControllersTests
 
             // Assert
             Assert.That(response.StatusCode == 200);
+        }
+
+        [Test]
+        public void GetAlbumById_Returns_404_If_Does_Not_Find_Album()
+        {
+            // Arrange
+            mockService.Setup(service => service.FindAlbumById(1)).Returns<Album?>(null);
+
+            // Act
+            var response = (NotFoundResult)controller.GetAlbumById(1);
+
+            // Assert
+            Assert.That(response.StatusCode == 404);
         }
 
         [Test]

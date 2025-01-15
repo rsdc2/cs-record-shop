@@ -4,7 +4,7 @@
     {
         Album? AddNewAlbum(Album album);
         bool? DeleteAlbumById(int id);
-        IEnumerable<Album> FindAllAlbums();
+        IEnumerable<Album>? FindAllAlbums();
         Album? FindAlbumById(int id);
 
         Album? UpdateAlbumById(int id, Album album);
@@ -29,7 +29,7 @@
             return _model.DeleteAlbumById(id);
         }
 
-        public IEnumerable<Album> FindAllAlbums()
+        public IEnumerable<Album>? FindAllAlbums()
         {
             return _model.FindAllAlbums();
         }
